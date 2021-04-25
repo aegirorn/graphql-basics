@@ -1,23 +1,24 @@
 import "@babel/polyfill";
 import { GraphQLServer } from "graphql-yoga";
-import db from "./db";
-import Query from "./resolvers/Query";
-import Mutation from "./resolvers/Mutation";
-import User from "./resolvers/User";
-import Post from "./resolvers/Post";
-import Comment from "./resolvers/Comment";
+const { mainCards, animals, categories } = require("./db");
+
+const Query = require("./resolvers/Query");
+const Animal = require("./resolvers/Animal");
+const Category = require("./resolvers/Category");
+const Mutation = require("./resolvers/Mutation");
 
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
   resolvers: {
     Query,
     Mutation,
-    User,
-    Post,
-    Comment,
+    Animal,
+    Category,
   },
   context: {
-    db,
+    mainCards,
+    animals,
+    categories,
   },
 });
 

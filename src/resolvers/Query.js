@@ -1,46 +1,20 @@
 const Query = {
-  users(parent, args, { db }, info) {
-    if (!args.query) {
-      return db.users;
-    }
-
-    return db.users.filter((user) => {
-      return user.name.toLowerCase().includes(args.query.toLowerCase());
+  mainCards: (parent, args, { mainCards }) => mainCards,
+  animals: (parent, args, { animals }) => animals,
+  animal: (parent, args, { animals }) => {
+    let animal = animals.find((animal) => {
+      return animal.slug === args.slug;
     });
+    return animal;
   },
-  posts(parent, args, { db }, info) {
-    if (!args.query) {
-      return db.posts;
-    }
 
-    return db.posts.filter((post) => {
-      const isTitleMatch = post.title
-        .toLowerCase()
-        .includes(args.query.toLowerCase());
-      const isBodyMatch = post.body
-        .toLowerCase()
-        .includes(args.query.toLowerCase());
-      return isTitleMatch || isBodyMatch;
+  categories: (parent, args, { categories }) => categories,
+  category: (parent, args, { categories }) => {
+    let category = categories.find((category) => {
+      return category.slug === args.slug;
     });
-  },
-  comments(parent, args, { db }, info) {
-    return db.comments;
-  },
-  me() {
-    return {
-      id: "123098",
-      name: "Ægir",
-      email: "mike@example.com",
-    };
-  },
-  post() {
-    return {
-      id: "092",
-      title: "GraphQL 101",
-      body: "",
-      published: false,
-    };
+    return category;
   },
 };
 
-export { Query as default };
+module.exports = Query;
